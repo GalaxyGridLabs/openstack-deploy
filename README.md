@@ -48,5 +48,3 @@ openstack role add --group red_teamers --project red_team member
 openstack group create admin
 openstack role add --group admin --project admin admin
 ```
-
-# Todo
