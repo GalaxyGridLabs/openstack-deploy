@@ -489,18 +489,17 @@ enable_openstack_core: "yes"
 #############################
 # Keystone - Identity Options
 #############################
+enable_keystone_federation: true
+keystone_federation_oidc_scopes: "openid gitea-auth"
+keystone_federation_oidc_response_type: "code"
 keystone_identity_providers:
   - name: "vault"
     protocol: "openid"
-    metadata_folder: ""
-    certificate_file: ""
-    public_name: ""
-    identifier: ""
-    openstack_domain: ""
-    attribute_mapping: ""
-
-keystone_federation_oidc_scopes: "openid gitea-auth"
-
+    metadata_folder: "/workspaces/openstack-deploy/oidc-metadata"
+    identifier: "https://vault.galaxygridlabs.com/v1/identity/oidc/provider/test-openstack"
+    openstack_domain: "Default"
+    public_name: "Authenicate with Vault"
+    attribute_mapping: vault_mapping
 
 #keystone_admin_user: "admin"
 

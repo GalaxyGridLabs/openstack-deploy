@@ -33,6 +33,20 @@ kolla-ansible bootstrap-servers -i ./multinode
 kolla-ansible prechecks -i ./multinode
 kolla-ansible deploy -i ./multinode
 kolla-ansible validate-config -i ./multinode
+
+# map OIDC attributes -> keystone attributes
+openstack mapping create --rules ./mapping-rules.json vault_mapping
+# Create openid protocol for vault provider
+openstack federation protocol create openid --mapping vault_mapping --identity-provider vault
+
+# Create group, project, and role for red team users
+openstack group create red_teamers
+openstack project create red_team
+openstack role add --group red_teamers --project red_team member
+
+# Create group, project, and role for admins
+openstack group create admin
+openstack role add --group admin --project admin admin
 ```
 
 # Todo

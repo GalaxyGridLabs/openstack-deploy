@@ -1,0 +1,62 @@
+[
+    {
+        "local": [
+            {
+                "user": {
+                    "name": "{0}",
+                    "email": "{1}"
+                },
+                "group": {
+                    "name": "admin",
+                    "domain": {
+                        "id": "default"
+                    }
+                }
+            }
+        ],
+        "remote": [
+            {
+                "type": "HTTP_OIDC_NICKNAME"
+            },
+            {
+                "type": "HTTP_OIDC_EMAIL"
+            },
+            {
+                "type": "HTTP_OIDC_GROUPS",
+                "any_one_of": [
+                    "labadmins@hul.to"
+                ]
+            }
+        ]
+    },
+    {
+        "local": [
+            {
+                "user": {
+                    "name": "{0}",
+                    "email": "{1}"
+                },
+                "group": {
+                    "name": "red_teamers",
+                    "domain": {
+                        "id": "default"
+                    }
+                }
+            }
+        ],
+        "remote": [
+            {
+                "type": "HTTP_OIDC_NICKNAME"
+            },
+            {
+                "type": "HTTP_OIDC_EMAIL"
+            },
+            {
+                "type": "HTTP_OIDC_GROUPS",
+                "any_one_of": [
+                    "red-team@hul.to"
+                ]
+            }
+        ]
+    }
+]
