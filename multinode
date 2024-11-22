@@ -2,7 +2,9 @@
 # additional groups are for more control of the environment.
 [control]
 # These hostname must be resolvable from your deployment host
-10.10.12.81 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa
+10.10.12.81 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa network_interface="enp4s0f0" neutron_external_interface="enp4s0f1"
+10.10.12.82 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa network_interface="enp4s0f0" neutron_external_interface="enp4s0f1"
+10.10.12.83 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa network_interface="eno4" neutron_external_interface="eno3"
 
 # The above can also be specified as follows:
 #control[01:03]     ansible_user=kolla
@@ -10,16 +12,19 @@
 # The network nodes are where your l3-agent and loadbalancers will run
 # This can be the same as a host in the control group
 [network]
-10.10.12.81 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa
-10.10.12.82 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa
+10.10.12.81 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa network_interface="enp4s0f0" neutron_external_interface="enp4s0f1"
+10.10.12.82 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa network_interface="enp4s0f0" neutron_external_interface="enp4s0f1"
+10.10.12.83 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa network_interface="eno4" neutron_external_interface="eno3"
 
 [compute]
-10.10.12.81 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa
-10.10.12.82 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa
+10.10.12.81 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa network_interface="enp4s0f0" neutron_external_interface="enp4s0f1"
+10.10.12.82 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa network_interface="enp4s0f0" neutron_external_interface="enp4s0f1"
+10.10.12.83 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa network_interface="eno4" neutron_external_interface="eno3"
 
 [monitoring]
-10.10.12.81 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa
-10.10.12.82 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa
+10.10.12.81 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa network_interface="enp4s0f0" neutron_external_interface="enp4s0f1"
+10.10.12.82 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa network_interface="enp4s0f0" neutron_external_interface="enp4s0f1"
+10.10.12.83 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa network_interface="eno4" neutron_external_interface="eno3"
 
 # When compute nodes and control nodes use different interfaces,
 # you need to comment out "api_interface" and other interfaces from the globals.yml
@@ -27,8 +32,9 @@
 #compute01 neutron_external_interface=eth0 api_interface=em1 tunnel_interface=em1
 
 [storage]
-10.10.12.81 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa
-10.10.12.82 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa
+10.10.12.81 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa network_interface="enp4s0f0" neutron_external_interface="enp4s0f1"
+10.10.12.82 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa network_interface="enp4s0f0" neutron_external_interface="enp4s0f1"
+10.10.12.83 ansible_ssh_user=sysadmin ansible_become=True ansible_private_key_file=/home/vscode/.ssh/id_rsa network_interface="eno4" neutron_external_interface="eno3"
 
 [deployment]
 localhost       ansible_connection=local
