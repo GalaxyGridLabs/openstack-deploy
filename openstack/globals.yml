@@ -49,7 +49,7 @@ kolla_base_distro: "ubuntu"
 openstack_tag_suffix: ""
 
 # Location of configuration overrides
-#node_custom_config: "{{ node_config }}/config"
+node_custom_config: "/workspaces/openstack-deploy/openstack/config/"
 
 # This should be a VIP, an unused IP on your network that will float between
 # the hosts running keepalived for high-availability. If you want to run an
@@ -464,20 +464,23 @@ enable_openstack_core: "yes"
 #external_ceph_cephx_enabled: "yes"
 
 # Glance
-#ceph_glance_user: "glance"
-#ceph_glance_keyring: "client.{{ ceph_glance_user }}.keyring"
-#ceph_glance_pool_name: "images"
+ceph_glance_user: "glance"
+ceph_glance_keyring: "client.{{ ceph_glance_user }}.keyring"
+ceph_glance_pool_name: "images"
+
 # Cinder
-#ceph_cinder_user: "cinder"
-#ceph_cinder_keyring: "client.{{ ceph_cinder_user }}.keyring"
-#ceph_cinder_pool_name: "volumes"
-#ceph_cinder_backup_user: "cinder-backup"
-#ceph_cinder_backup_keyring: "client.{{ ceph_cinder_backup_user }}.keyring"
-#ceph_cinder_backup_pool_name: "backups"
+ceph_cinder_user: "cinder"
+ceph_cinder_keyring: "client.{{ ceph_cinder_user }}.keyring"
+ceph_cinder_pool_name: "volumes"
+
+ceph_cinder_backup_user: "cinder-backup"
+ceph_cinder_backup_keyring: "client.{{ ceph_cinder_backup_user }}.keyring"
+ceph_cinder_backup_pool_name: "backups"
+
 # Nova
 #ceph_nova_keyring: "{{ ceph_cinder_keyring }}"
-#ceph_nova_user: "{{ ceph_cinder_user }}"
-#ceph_nova_pool_name: "vms"
+ceph_nova_user: "{{ ceph_cinder_user }}"
+ceph_nova_pool_name: "vms"
 # Gnocchi
 #ceph_gnocchi_user: "gnocchi"
 #ceph_gnocchi_keyring: "client.{{ ceph_gnocchi_user }}.keyring"
@@ -490,12 +493,12 @@ enable_openstack_core: "yes"
 # Keystone - Identity Options
 #############################
 enable_keystone_federation: true
-keystone_federation_oidc_scopes: "openid gitea-auth"
+keystone_federation_oidc_scopes: "openid test-openstack"
 keystone_federation_oidc_response_type: "code"
 keystone_identity_providers:
   - name: "vault"
     protocol: "openid"
-    metadata_folder: "/workspaces/openstack-deploy/oidc-metadata"
+    metadata_folder: "/workspaces/openstack-deploy/openstack/oidc-metadata"
     identifier: "https://vault.galaxygridlabs.com/v1/identity/oidc/provider/test-openstack"
     openstack_domain: "Default"
     public_name: "Authenicate with Vault"
@@ -520,7 +523,7 @@ keystone_identity_providers:
 # Glance - Image Options
 ########################
 # Configure image backend.
-#glance_backend_ceph: "no"
+glance_backend_ceph: "yes"
 #glance_backend_file: "yes"
 #glance_backend_swift: "no"
 #glance_backend_vmware: "no"
@@ -567,7 +570,7 @@ keystone_identity_providers:
 # Cinder - Block Storage Options
 ################################
 # Enable / disable Cinder backends
-#cinder_backend_ceph: "no"
+cinder_backend_ceph: "yes"
 #cinder_backend_vmwarevc_vmdk: "no"
 #cinder_backend_vmware_vstorage_object: "no"
 #cinder_volume_group: "cinder-volumes"
@@ -610,7 +613,7 @@ keystone_identity_providers:
 ########################
 # Nova - Compute Options
 ########################
-#nova_backend_ceph: "no"
+nova_backend_ceph: "yes"
 
 # Valid options are [ qemu, kvm, vmware ]
 #nova_compute_virt_type: "kvm"
