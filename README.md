@@ -236,3 +236,22 @@ openstack server create \
     --security-group default \
     red_team-test
 ```
+
+
+# Troubleshooting
+
+## RabbitMQ
+
+```bash
+# If queues aren't being consumed
+$ watch -n 1 "rabbitmqctl list_queues | grep -vE '0$'"
+Timeout: 60.0 seconds ...
+Listing queues for vhost / ...
+name	messages
+compute.compute-83	6
+compute.compute-81	1
+compute.compute-82	1
+
+# Restart RabbitMQ
+$ kolla-ansible rabbitmq-reset-state -i ./multinode
+```
