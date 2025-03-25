@@ -2,17 +2,66 @@
 Following https://docs.ceph.com/en/latest/cephadm/install/
 
 ## Setup OS
+
+### Setup networking
 ```bash
-# Configure DHCP
+sudo vi /etc/netplan/50-cloud-init.yaml
+
 # HPs
-sudo dhcpcd enp4s0f1 # neutron
-sudo dhcpcd ens6f0 #10gig
+network:
+    ethernets:
+        ens6f0:
+            addresses:
+            - 10.10.254.8X/24
+        enp4s0f0:
+            addresses:
+            - 10.10.12.8X/24
+            nameservers:
+                addresses:
+                - 10.10.12.1
+                search: []
+            routes:
+            -   to: default
+                via: 10.10.12.1
+    version: 2
 
 # Dell
-sudo dhcpcd eno3 # neutron
-sudo dhcpd
+network:
+    ethernets:
+        eno1:
+            addresses:
+            - 10.10.254.83/24
+        eno4:
+            addresses:
+            - 10.10.12.83/24
+            nameservers:
+                addresses:
+                - 10.10.12.1
+                search: []
+            routes:
+            -   to: default
+                via: 10.10.12.1
+    version: 2
 
+sudo netplan apply
+
+# Test 10 gig on all nodes
+sudo iperf3 -s
+iperf3 -c 10.10.254.83
 ```
+
+### Setup users on all hosts
+```bash
+sudo adduser --disabled-password ceph
+sudo usermod -aG sudo ceph
+read DEV_NUC_KEY
+sudo mkdir /home/ceph/.ssh/
+echo "$DEV_NUC_KEY" | sudo tee -a /home/ceph/.ssh/authorized_keys
+sudo chmod 700 /home/ceph/.ssh
+sudo chmod 600 /home/ceph/.ssh/authorized_keys
+sudo chown -R ceph: /home/ceph/.ssh/
+```
+
 
 ## Bootstrap Ceph
 ```bash
@@ -21,12 +70,13 @@ CEPH_RELEASE=17.2.7 # Newest version that doesn't have issues with glibc
 curl --silent --remote-name --location https://download.ceph.com/rpm-${CEPH_RELEASE}/el9/noarch/cephadm
 chmod +x ./cephadm
 
-./cephadm add-repo --release quincy
-./cephadm install ceph-common
+sudo ./cephadm add-repo --release quincy
+sudo ./cephadm install ceph-common
 # Get TLS cert from Vault - Cronjob to get update cert from vault
 # Add ceph user with sudo NOPASSWD to all hosts
 # Generate signed SSH cert
-./cephadm bootstrap --mon-ip 10.10.254.83 --dashboard-key ?? --dashboard-crt ?? --skip-ssh --ssh-signed-cert ?? --ssh-private-key ~/.ssh/id_ed --ssh-user ceph
+export PASSWORD=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32)
+sudo ./cephadm bootstrap --mon-ip 10.10.254.83 --initial-dashboard-password $PASSWORD --skip-ssh --ssh-private-key ~/.ssh/id_ecdsa --ssh-user ceph
 ceph orch host add compute-82 10.10.254.82 --labels _admin
 ceph orch host add compute-83 10.10.254.81 --labels _admin
 
