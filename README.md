@@ -76,7 +76,7 @@ sudo ./cephadm install ceph-common
 # Add ceph user with sudo NOPASSWD to all hosts
 # Generate signed SSH cert
 export PASSWORD=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32)
-sudo ./cephadm bootstrap --mon-ip 10.10.254.83 --initial-dashboard-password $PASSWORD --cluster-network 10.10.254.0/24 --skip-ssh --ssh-private-key ~/.ssh/id_ecdsa --ssh-user ceph
+sudo ./cephadm bootstrap --mon-ip 10.10.254.83 --initial-dashboard-password $PASSWORD --cluster-network 10.10.254.0/24 --skip-ssh --ssh-private-key ~/.ssh/id_ecdsa --ssh-public-key ~/.ssh/id_ecdsa.pub --ssh-user ceph
 ceph orch host add compute-82 10.10.254.82 --labels _admin
 ceph orch host add compute-83 10.10.254.81 --labels _admin
 
