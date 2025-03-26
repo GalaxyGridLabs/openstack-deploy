@@ -7,6 +7,36 @@
                     "email": "{1}"
                 },
                 "group": {
+                    "name": "spellshift",
+                    "domain": {
+                        "id": "default"
+                    }
+                }
+            }
+        ],
+        "remote": [
+            {
+                "type": "HTTP_OIDC_NICKNAME"
+            },
+            {
+                "type": "HTTP_OIDC_EMAIL"
+            },
+            {
+                "type": "HTTP_OIDC_GROUPS",
+                "any_one_of": [
+                    "spellshift@hul.to"
+                ]
+            }
+        ]
+    },
+    {
+        "local": [
+            {
+                "user": {
+                    "name": "{0}",
+                    "email": "{1}"
+                },
+                "group": {
                     "name": "admin",
                     "domain": {
                         "id": "default"
