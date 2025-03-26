@@ -78,7 +78,7 @@ sudo ./cephadm install ceph-common
 export PASSWORD=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32)
 sudo ./cephadm bootstrap --mon-ip 10.10.254.83 --initial-dashboard-password $PASSWORD --cluster-network 10.10.254.0/24 --skip-ssh --ssh-private-key ~/.ssh/id_ecdsa --ssh-public-key ~/.ssh/id_ecdsa.pub --ssh-user ceph
 ceph orch host add compute-82 10.10.254.82 --labels _admin
-ceph orch host add compute-83 10.10.254.81 --labels _admin
+ceph orch host add compute-81 10.10.254.81 --labels _admin
 
 # Fix bug with ceph and app armor on each host https://www.reddit.com/r/ceph/comments/1g6od5x/having_issues_getting_a_ceph_cluster_off_the/
 sudo ln -s /etc/apparmor.d/MongoDB_Compass /etc/apparmor.d/disable/
